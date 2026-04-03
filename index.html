@@ -3,536 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alba Canas | Diseño de Experiencias de Aprendizaje</title>
+    <title>Alba Canas | Learning Experience & Product</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Variables y Configuración Base - Estilo Premium / UX */
-        :root {
-            --primary: #0f172a; /* Slate 900 */
-            --primary-light: #1e293b; /* Slate 800 */
-            --accent: #2563eb; /* Blue 600 */
-            --accent-hover: #1d4ed8; /* Blue 700 */
-            --surface: #ffffff;
-            --background: #f8fafc; /* Slate 50 */
-            --text-main: #334155; /* Slate 700 */
-            --text-muted: #64748b; /* Slate 500 */
-            --border: #e2e8f0; /* Slate 200 */
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --radius-sm: 8px;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-            --shadow-hover: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            --max-width: 1100px;
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .soft-card { border: 1px solid rgba(226, 232, 240, 0.5); transition: all 0.3s ease; }
+        .soft-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); }
+        .bg-mesh { background-color: #ffffff; background-image: radial-gradient(at 0% 0%, hsla(210,100%,98%,1) 0, transparent 50%), radial-gradient(at 100% 100%, hsla(215,100%,96%,1) 0, transparent 50%); }
+        .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-blur: 12px; }
+        .step-line::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #e2e8f0; }
+        .img-container { background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 1.5rem; overflow: hidden; position: relative; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .img-container:hover img { transform: scale(1.05); }
+        
+        #mobile-menu { transition: transform 0.3s ease-in-out; transform: translateX(100%); }
+        #mobile-menu.open { transform: translateX(0); }
+
+        @keyframes slow-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-main);
-            background-color: var(--background);
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-
-        /* Animaciones */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-up {
-            animation: fadeUp 0.8s ease forwards;
-            opacity: 0;
-        }
-
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
-
-        /* Utilidades */
-        .container {
-            width: 100%;
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* NavBar Minimalista */
-        nav {
-            padding: 2rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: fadeUp 0.5s ease forwards;
-        }
-
-        .logo {
-            font-weight: 800;
-            font-size: 2.75rem; /* Tamaño aumentado de nuevo para mayor protagonismo */
-            color: var(--primary);
-            letter-spacing: -0.02em;
-        }
-
-        .nav-links a {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 6rem 0 4rem;
-            position: relative;
-        }
-
-        /* Efecto de gradiente de fondo (Glassmorphism sutil) */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, rgba(255,255,255,0) 70%);
-            border-radius: 50%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 5vw, 4.5rem);
-            color: var(--primary);
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 1rem;
-            max-width: 800px;
-        }
-
-        .hero-subtitle {
-            font-size: 1.35rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 2rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .hero-subtitle .separator {
-            color: var(--text-muted);
-            font-weight: 400;
-            margin: 0 0.5rem;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 650px;
-            margin-bottom: 3rem;
-        }
-
-        /* Botones */
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem 2rem;
-            border-radius: 99px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: var(--transition);
-            cursor: pointer;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background-color: var(--accent);
-            color: white;
-            box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.23);
-        }
-
-        .btn-secondary {
-            background-color: white;
-            color: var(--primary);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--text-muted);
-            transform: translateY(-2px);
-        }
-
-        /* Grid Bento Box (UX Layout) */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 1.5rem;
-            margin: 4rem 0 6rem;
-        }
-
-        .bento-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition);
-        }
-
-        .bento-card:hover {
-            box-shadow: var(--shadow-hover);
-            transform: translateY(-4px);
-        }
-
-        .bento-card h2, .bento-card h3 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 700;
-        }
-
-        /* Tamaños de las tarjetas Bento */
-        .card-about { grid-column: span 12; }
-        .card-skills { grid-column: span 7; }
-        .card-tools { grid-column: span 5; }
-        .card-languages { grid-column: span 12; display: flex; flex-direction: column; justify-content: center; }
-
-        /* Contenido de las tarjetas */
-        .about-text p {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-        .about-text p:last-child { margin-bottom: 0; }
-
-        .skills-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .skills-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            font-size: 1.05rem;
-            color: var(--primary-light);
-        }
-
-        .skills-list li svg {
-            flex-shrink: 0;
-            color: var(--accent);
-            margin-top: 4px;
-        }
-
-        .tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .tool-tag {
-            background: var(--background);
-            color: var(--text-main);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.95rem;
-            font-weight: 500;
-            border: 1px solid transparent;
-            transition: var(--transition);
-        }
-
-        .bento-card:hover .tool-tag {
-            border-color: var(--border);
-        }
-
-        .lang-flex {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .lang-item {
-            background: var(--background);
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius-md);
-            flex: 1;
-            min-width: 200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .lang-item strong {
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
-
-        .lang-item span {
-            color: var(--accent);
-            font-weight: 600;
-            background: rgba(37, 99, 235, 0.1);
-            padding: 0.25rem 0.75rem;
-            border-radius: 99px;
-            font-size: 0.85rem;
-        }
-
-        /* Case Study Teaser (Premium Call to Action) */
-        .case-study-cta {
-            background: var(--primary);
-            border-radius: var(--radius-lg);
-            padding: 4rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 6rem;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            transition: var(--transition);
-        }
-
-        .case-study-cta:hover {
-            transform: scale(1.01);
-        }
-
-        /* Elemento decorativo de fondo */
-        .case-study-cta::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.4) 0%, rgba(255,255,255,0) 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .cta-label {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #93c5fd;
-            padding: 0.5rem 1rem;
-            border-radius: 99px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(4px);
-        }
-
-        .case-study-cta h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            max-width: 700px;
-            color: white;
-        }
-
-        .case-study-cta p {
-            font-size: 1.2rem;
-            color: #94a3b8;
-            max-width: 600px;
-            margin-bottom: 2.5rem;
-        }
-
-        .btn-cta {
-            background: white;
-            color: var(--primary);
-        }
-
-        .btn-cta:hover {
-            background: var(--background);
-            transform: translateX(5px);
-            box-shadow: 0 0 20px rgba(255,255,255,0.2);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 3rem 0;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Responsividad */
-        @media (max-width: 900px) {
-            .card-skills, .card-tools { grid-column: span 12; }
-        }
-
-        @media (max-width: 768px) {
-            .hero { padding: 4rem 0 2rem; }
-            .hero-tags { margin-bottom: 1.5rem; }
-            .bento-card { padding: 2rem; }
-            .case-study-cta { padding: 3rem 2rem; }
-            .btn-group { flex-direction: column; width: 100%; }
-            .btn { width: 100%; }
-            .lang-flex { flex-direction: column; gap: 1rem; }
-        }
+        .animate-spin-slow { animation: slow-spin 8s linear infinite; }
     </style>
 </head>
-<body>
+<body class="bg-mesh text-slate-900">
 
-    <div class="container">
-        <!-- Navegación -->
-        <nav>
-            <div class="logo">Alba Canas</div>
-            <div class="nav-links">
-                <a href="https://www.linkedin.com/in/albacanas/" target="_blank">LinkedIn ↗</a>
+    <!-- Navegación -->
+    <nav class="sticky top-0 z-50 glass-nav border-b border-slate-100">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <span class="text-lg font-extrabold tracking-tight text-slate-800">ALBA CANAS</span>
+            <div class="hidden md:flex space-x-10 text-sm font-semibold text-slate-500">
+                <a href="#about" class="hover:text-blue-600 transition-colors">Sobre mí</a>
+                <a href="#case" class="hover:text-blue-600 transition-colors">Validated Case</a>
+                <a href="#contact" class="hover:text-blue-600 transition-colors">Contacto</a>
             </div>
-        </nav>
+            <button id="menu-btn" class="md:hidden text-slate-800 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
 
-        <!-- HEADER (HERO) -->
-        <header class="hero animate-up">
-            <h1>Diseño de experiencias de aprendizaje</h1>
-            
-            <div class="hero-subtitle">
-                eLearning <span class="separator">·</span> Aprendizaje digital <span class="separator">|</span> IA en educación
-            </div>
-            
-            <p>
-                Profesional del ámbito del aprendizaje digital con más de 10 años de experiencia diseñando y coordinando iniciativas formativas en entornos educativos y digitales.
-            </p>
-            
-            <div class="btn-group">
-                <a href="exploracion-diseno.html" class="btn btn-primary">
-                    Ver exploración de diseño
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </a>
-                <a href="#about" class="btn btn-secondary">
-                    Conocer más ↓
-                </a>
-            </div>
-        </header>
-
-        <!-- BENTO BOX GRID (CONTENIDO) -->
-        <main class="bento-grid" id="about">
-            
-            <!-- Sobre mí -->
-            <section class="bento-card card-about animate-up delay-1">
-                <h2>Sobre mí</h2>
-                <div class="about-text">
-                    <p>Trabajo en la intersección entre pedagogía, tecnología y diseño de aprendizaje. A lo largo de mi trayectoria he diseñado experiencias de aprendizaje digital, desarrollado contenidos eLearning e implementado plataformas LMS en contextos educativos.</p>
-                    <p>Mi enfoque se centra en estructurar experiencias formativas claras, progresivas y orientadas a resultados, combinando diseño pedagógico, tecnología educativa y mejora continua basada en feedback de usuarios.</p>
-                    <p>Actualmente me interesa especialmente explorar cómo tecnologías emergentes como la inteligencia artificial pueden apoyar nuevos modelos de aprendizaje.</p>
-                </div>
-            </section>
-
-            <!-- Competencias -->
-            <section class="bento-card card-skills animate-up delay-2">
-                <h3>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    Competencias
-                </h3>
-                <ul class="skills-list">
-                    <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Diseño de experiencias de aprendizaje</li>
-                    <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> eLearning e Instructional Design</li>
-                    <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Aprendizaje digital</li>
-                    <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Coordinación de programas formativos</li>
-                    <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Learning Management Systems (LMS)</li>
-                    <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Learning analytics</li>
-                    <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> IA aplicada al aprendizaje</li>
-                    <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Metodologías Agile / Scrum</li>
-                </ul>
-            </section>
-
-            <!-- Herramientas -->
-            <section class="bento-card card-tools animate-up delay-3">
-                <h3>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                    Herramientas
-                </h3>
-                <div class="tags-container">
-                    <span class="tool-tag">Moodle</span>
-                    <span class="tool-tag">Cornerstone</span>
-                    <span class="tool-tag">TalentLMS</span>
-                    <span class="tool-tag">Articulate Storyline</span>
-                    <span class="tool-tag">SCORM</span>
-                    <span class="tool-tag">Canva</span>
-                    <span class="tool-tag">Google Workspace</span>
-                    <span class="tool-tag">Microsoft Office</span>
-                </div>
-            </section>
-
-            <!-- Idiomas -->
-            <section class="bento-card card-languages animate-up delay-4">
-                <h3 style="margin-bottom: 1rem;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                    Idiomas
-                </h3>
-                <div class="lang-flex">
-                    <div class="lang-item">
-                        <strong>Catalán</strong>
-                        <span>Nativo</span>
-                    </div>
-                    <div class="lang-item">
-                        <strong>Español</strong>
-                        <span>Nativo</span>
-                    </div>
-                    <div class="lang-item">
-                        <strong>Inglés</strong>
-                        <span>C1</span>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-
-        <!-- CTA CASE STUDY -->
-        <section class="case-study-cta animate-up delay-4">
-            <span class="cta-label">Exploración de diseño</span>
-            <h2>Sistema de práctica musical asistido por IA</h2>
-            <p>Exploración conceptual sobre cómo estructurar una experiencia de práctica musical basada en inteligencia artificial, ejercicios progresivos y feedback estructurado.</p>
-            <a href="exploracion-diseno.html" class="btn btn-cta">
-                Ver caso de estudio
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </a>
-        </section>
-
-        <!-- FOOTER -->
-        <footer>
-            <p>&copy; 2024 Alba Canas.</p>
-        </footer>
+    <!-- Menú Móvil -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white flex flex-col items-center justify-center space-y-8 text-2xl font-bold md:hidden">
+        <button id="close-btn" class="absolute top-6 right-6 text-slate-800">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="#about" class="mobile-link">Sobre mí</a>
+        <a href="#case" class="mobile-link">Validated Case</a>
+        <a href="#contact" class="mobile-link">Contacto</a>
     </div>
 
+    <!-- Hero -->
+    <header class="pt-20 md:pt-32 pb-12 md:pb-24 px-6">
+        <div class="max-w-4xl mx-auto text-left">
+            <div class="inline-block px-4 py-1.5 mb-6 text-[10px] md:text-xs font-bold tracking-widest text-blue-600 uppercase bg-blue-50 rounded-full">
+                Learning Experience Designer
+            </div>
+            <h1 class="text-4xl md:text-7xl font-extrabold leading-tight md:leading-[1.1] mb-8 text-slate-900">
+                Diseño experiencias que se <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500 font-black">entienden y se usan.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
+                Pedagogía, tecnología y estructura de producto para transformar contenidos densos en aprendizaje real y autónomo.
+            </p>
+        </div>
+    </header>
+
+    <!-- Sobre mí -->
+    <section id="about" class="py-12 md:py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
+                <div class="text-base md:text-lg leading-relaxed text-slate-700 space-y-6">
+                    <p>A lo largo de mi trayectoria he diseñado experiencias de aprendizaje digital, desarrollado contenidos eLearning y trabajado con plataformas LMS en diversos contextos educativos.</p>
+                    <p>Mi enfoque combina el <strong>diseño pedagógico</strong> con la <strong>tecnología educativa</strong>, manteniendo siempre una mirada de mejora continua basada en el feedback de los usuarios.</p>
+                </div>
+                <div class="text-base md:text-lg leading-relaxed text-slate-700 space-y-6">
+                    <p>Actualmente me interesa especialmente explorar cómo tecnologías emergentes, como la <strong>IA</strong>, pueden aplicarse para mejorar la personalización y la eficiencia del aprendizaje.</p>
+                    <p class="font-semibold text-blue-600">Mi objetivo: facilitar que el usuario entienda, utilice y aplique lo aprendido desde el primer momento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competencias & Herramientas -->
+    <section class="pb-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Competencias -->
+                <div class="soft-card p-8 rounded-[2rem] bg-blue-50/20">
+                    <div class="w-12 h-12 bg-blue-600/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-layer-group text-blue-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-800">Competencias</h3>
+                    <ul class="text-sm text-slate-600 space-y-3">
+                        <li><span class="text-blue-400 mr-2">•</span> Diseño instruccional / tecnopedagógico</li>
+                        <li><span class="text-blue-400 mr-2">•</span> Recorridos centrados en el usuario (UX)</li>
+                        <li><span class="text-blue-400 mr-2">•</span> Estructuración de contenidos eLearning</li>
+                        <li><span class="text-blue-400 mr-2">•</span> Mejora continua basada en feedback</li>
+                    </ul>
+                </div>
+                <!-- Herramientas -->
+                <div class="soft-card p-8 rounded-[2rem] bg-indigo-50/20">
+                    <div class="w-12 h-12 bg-indigo-600/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-wrench text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-800">Herramientas</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <span class="block text-[10px] uppercase font-extrabold text-slate-400 mb-1">Diseño</span>
+                            <div class="text-xs font-semibold text-slate-600">Figma · Canva</div>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-extrabold text-slate-400 mb-1">Gestión</span>
+                            <div class="text-xs font-semibold text-slate-600">Jira · Trello</div>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-extrabold text-slate-400 mb-1">LMS</span>
+                            <div class="text-xs font-semibold text-slate-600">Moodle · LMS</div>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-extrabold text-slate-400 mb-1">Pro</span>
+                            <div class="text-xs font-semibold text-slate-600">G-Suite · Office</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Idiomas -->
+                <div class="soft-card p-8 rounded-[2rem] bg-slate-50/50">
+                    <div class="w-12 h-12 bg-slate-600/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-language text-slate-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-800">Idiomas</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600">Español / Catalán</span>
+                            <span class="px-2 py-1 bg-white rounded text-[10px] font-bold border border-slate-100">NATIVO</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600">Inglés</span>
+                            <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-[10px] font-bold border border-blue-100 uppercase tracking-widest">C1 level</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study: VMusicLab -->
+    <section id="case" class="py-20 md:py-32 px-6 bg-slate-950 text-white overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-blue-600/10 blur-[100px] rounded-full"></div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="mb-12 md:mb-16">
+                <span class="text-blue-500 font-bold text-[10px] uppercase tracking-widest bg-blue-500/10 px-4 py-2 rounded-full border border-blue-500/20 inline-block">Validated Case</span>
+                <h2 class="text-4xl md:text-6xl font-extrabold mt-6 mb-6">VMusicLab</h2>
+                <p class="text-lg md:text-xl text-slate-400 max-w-3xl leading-relaxed">Rediseñando la educación musical mediante retos digitales: autonomía y transferencia del aprendizaje.</p>
+            </div>
+
+            <!-- Galería Visual con imágenes .png -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
+                <div class="img-container h-64 md:h-96 md:col-span-2 group">
+                    <img src="learning-challenges.png" alt="Retos Digitales VMusicLab">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                        <p class="text-xs font-bold uppercase tracking-widest">Interfaz de Retos para Alumnos</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="img-container h-48 group">
+                        <img src="learning-structure-map.png" alt="Mapa de Niveles">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <p class="text-[10px] font-bold uppercase tracking-widest">Mapa de Aprendizaje</p>
+                        </div>
+                    </div>
+                    <div class="img-container h-48 group">
+                        <img src="learning-progress-tracking.png" alt="Tracking Airtable">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <p class="text-[10px] font-bold uppercase tracking-widest">Seguimiento en Airtable</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problema vs Solución -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-16">
+                <div class="bg-white/5 p-8 rounded-[2rem] border border-white/10">
+                    <h3 class="text-blue-400 font-bold text-xs uppercase mb-6 tracking-wider">El Desafío</h3>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed">Identifiqué una brecha crítica: los alumnos dominaban la teoría musical pero fallaban al aplicarla en entornos prácticos y digitales reales.</p>
+                </div>
+                <div class="bg-white/5 p-8 rounded-[2rem] border border-white/10">
+                    <h3 class="text-emerald-400 font-bold text-xs uppercase mb-6 tracking-wider">La Solución</h3>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed">Diseño de una arquitectura de aprendizaje basada en la <strong>acción</strong>, con retos progresivos y soportes visuales para reducir la carga cognitiva.</p>
+                </div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 mb-20 text-center">
+                <div class="p-6 md:p-8 bg-blue-600/5 rounded-3xl border border-blue-500/10">
+                    <span class="block text-4xl font-bold text-blue-500 mb-1">97%</span>
+                    <span class="text-[9px] uppercase font-bold text-slate-500 tracking-widest">Satisfacción</span>
+                </div>
+                <div class="p-6 md:p-8 bg-blue-600/5 rounded-3xl border border-blue-500/10">
+                    <span class="block text-4xl font-bold text-blue-500 mb-1">12</span>
+                    <span class="text-[9px] uppercase font-bold text-slate-500 tracking-widest">Semanas de Test</span>
+                </div>
+                <div class="p-6 md:p-8 bg-blue-600/5 rounded-3xl border border-blue-500/10 col-span-2 md:col-span-1">
+                    <span class="block text-4xl font-bold text-blue-500 mb-1">26</span>
+                    <span class="text-[9px] uppercase font-bold text-slate-500 tracking-widest">Alumnos Validados</span>
+                </div>
+            </div>
+
+            <!-- Iteración & Rol -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
+                <div>
+                    <h3 class="text-2xl font-bold mb-10">Iteración continua</h3>
+                    <div class="space-y-12 relative step-line pl-2 text-sm">
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 w-9 h-9 bg-blue-600 text-white rounded-full flex items-center justify-center text-[10px] font-black shadow-lg shadow-blue-500/30">V.1</div>
+                            <h4 class="font-bold mb-1 text-white">Carga cognitiva</h4>
+                            <p class="text-slate-400">Mejora de instrucciones y ejemplos visuales tras observar fricción inicial en la comprensión.</p>
+                        </div>
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 w-9 h-9 bg-blue-600 text-white rounded-full flex items-center justify-center text-[10px] font-black">V.2</div>
+                            <h4 class="font-bold mb-1 text-white">Engagement emocional</h4>
+                            <p class="text-slate-400">Rediseño visual de la interfaz para aumentar la motivación y el sentido de logro del alumno.</p>
+                        </div>
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 w-9 h-9 bg-blue-600 text-white rounded-full flex items-center justify-center text-[10px] font-black">V.3</div>
+                            <h4 class="font-bold mb-1 text-white">Sistema de Tracking</h4>
+                            <p class="text-slate-400">Implementación de un panel en Airtable para organizar el feedback y evaluar la autonomía real.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/5 p-8 md:p-10 rounded-[2.5rem] border border-white/10 h-fit">
+                    <h3 class="text-xl font-bold mb-8">Rol End-to-End</h3>
+                    <div class="grid grid-cols-1 gap-4 text-[11px] font-semibold uppercase tracking-wider">
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 text-slate-400 flex items-center gap-4 group hover:bg-white/10 transition-all">
+                            <i class="fas fa-search text-blue-500 text-lg"></i> Identificación del Problema
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 text-slate-400 flex items-center gap-4 group hover:bg-white/10 transition-all">
+                            <i class="fas fa-pencil-ruler text-blue-500 text-lg"></i> Diseño de la Solución
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 text-slate-400 flex items-center gap-4 group hover:bg-white/10 transition-all">
+                            <i class="fas fa-laptop-code text-blue-500 text-lg"></i> Implementación en entorno real
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 text-slate-400 flex items-center gap-4 group hover:bg-white/10 transition-all">
+                            <i class="fas fa-chart-bar text-blue-500 text-lg"></i> Análisis de Resultados
+                        </div>
+                        <div class="p-4 bg-white/10 rounded-2xl border border-blue-500/30 text-white flex items-center gap-4">
+                            <i class="fas fa-sync-alt text-blue-400 text-lg animate-spin-slow"></i> Iteración Continua
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="border-t border-white/10 pt-16">
+                <h3 class="text-2xl font-bold mb-8">Próximos pasos: Roadmap</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                        <i class="fas fa-gamepad text-blue-500 mb-4 block"></i>
+                        <h4 class="font-bold text-sm mb-2 text-white">Gamificación</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">Integrar sistema de puntos, niveles e insignias para reforzar el engagement.</p>
+                    </div>
+                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                        <i class="fas fa-database text-blue-500 mb-4 block"></i>
+                        <h4 class="font-bold text-sm mb-2 text-white">Tracking 2.0</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">Evolucionar la captura de datos para análisis predictivo del aprendizaje.</p>
+                    </div>
+                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                        <i class="fas fa-rocket text-blue-500 mb-4 block"></i>
+                        <h4 class="font-bold text-sm mb-2 text-white">Plataforma SaaS</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">Transformar el MVP en una plataforma digital escalable y autónoma.</p>
+                    </div>
+                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                        <i class="fas fa-building text-blue-500 mb-4 block"></i>
+                        <h4 class="font-bold text-sm mb-2 text-white">Modelo B2B</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">Explorar la distribución del sistema en centros educativos y conservatorios.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="py-24 px-6 bg-white text-center border-t border-slate-100">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-[10px] font-extrabold uppercase tracking-[0.5em] text-slate-300 mb-16">Contacto</h2>
+            <div class="flex justify-center gap-8 md:gap-16">
+                <a href="https://www.linkedin.com/in/albacanas" target="_blank" class="group">
+                    <div class="w-20 h-20 bg-slate-50 border border-slate-100 rounded-[2rem] flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:border-blue-600 transition-all duration-500 group-hover:rotate-12">
+                        <i class="fab fa-linkedin-in text-3xl text-slate-400 group-hover:text-white transition-colors"></i>
+                    </div>
+                </a>
+                <a href="mailto:albacanas.est@gmail.com" class="group">
+                    <div class="w-20 h-20 bg-slate-50 border border-slate-100 rounded-[2rem] flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:border-blue-600 transition-all duration-500 group-hover:-rotate-12">
+                        <i class="far fa-envelope text-3xl text-slate-400 group-hover:text-white transition-colors"></i>
+                    </div>
+                </a>
+            </div>
+            <p class="mt-20 text-[10px] text-slate-300 font-bold uppercase tracking-widest">© 2024 Alba Canas | LXD & Product</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const toggleMenu = () => mobileMenu.classList.toggle('open');
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+    </script>
 </body>
 </html>
